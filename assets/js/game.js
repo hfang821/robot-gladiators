@@ -26,8 +26,14 @@ var fightOrSkip = function (){
 }
 
 var fight = function(enemy) {
+
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
     //window.alert("Welcome to Robot Gladiators!");
     while (enemy.health>0 && playerInfo.health >0){
+    if (isPlayerTurn){
     if (fightOrSkip ()){
         break;
     }
@@ -44,14 +50,15 @@ var fight = function(enemy) {
             break;
         } else{
             window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }
-        
+        } 
+    } else {
         var damage=randomNumber(enemy.attack-3,enemy.attack);
         playerInfo.health = Math.max(0, playerInfo.health - damage);
         console.log (
             enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
         );
-
+    
+        
         if (playerInfo.health <= 0){
             window.alert(playerInfo.name + " has died!");
             break;
@@ -59,6 +66,8 @@ var fight = function(enemy) {
             window.alert (playerInfo.name + " still has " + playerInfo.health + " health left.");
         }
     }
+    isPlayerTurn =!isPlayerTurn;
+}
 };
 
 var startGame = function (){
@@ -104,7 +113,7 @@ var endGame = function (){
 
 var shop=function(){
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the shop?"
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the shop? Please enter 1 for refill, 2 for upgrade, and 3 for leave."
     );
   shopOptionPrompt = parseInt (shopOptionPrompt);
   switch(shopOptionPrompt){
