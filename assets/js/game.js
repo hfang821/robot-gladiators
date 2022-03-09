@@ -3,23 +3,35 @@ var randomNumber=function(min,max){
     return value;
 };
 
+var fightOrSkip = function (){
+    var promptFight = window.prompt("Would you like to fight or skip the battle?");
+    promptFight = promptFight.toLowerCase();
 
+    if (promptFight === "" || promptFight === null){
+        window.alert("You need to provide a valid answer! Please try again!");
+        return fightOrSkip();
+    }
+
+    if(promptFight === "skip"){
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        if (confirmSkip){
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            playerInfo.money =playerInfo.money -10;
+            return true;
+            shop();
+        }
+    }
+    return false;
+}
 
 var fight = function(enemy) {
     //window.alert("Welcome to Robot Gladiators!");
     while (enemy.health>0 && playerInfo.health >0){
-    var promptFight = window.prompt("Would you like to fight or skip this battle?");
-    if (promptFight === "skip" || promptFight === "SKIP") {
-        var confirmSkip = window.confirm ("Are you sure you'd like to quit?");
-
-        if (confirmSkip){
-            window.alert(playerInfo.name + " has chosen to skip the fight. Goodbye!");
-            playerInfo.money = Math.max(0, playerInfo.money - 10);
-            console.log("playerInfo.money", playerInfo.money);
-            break;
-        }
-        
+    if (fightOrSkip ()){
+        break;
     }
+    
     var damage= randomNumber(playerInfo.attack-3, playerInfo.attack);
         enemy.health = Math.max(0, enemy.health - playerInfo.attack);
         console.log(
